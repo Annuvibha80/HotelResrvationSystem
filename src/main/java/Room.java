@@ -1,24 +1,20 @@
 public class Room {
-    private int room;
+    private int roomNumber;
     private String type;
     private double price;
     private boolean available;
 
-    Room(int room, String type, double price, boolean available ){
-        this.room = room;
+    // Constructor
+    public Room(int roomNumber, String type, double price) {
+        this.roomNumber = roomNumber;
         this.type = type;
         this.price = price;
-        this.available =  true;
+        this.available = true; // by default room is available
     }
 
-    public static boolean isAvailable(boolean available){
-        return available;
-    }
-
-
-    // 1. Getters
+    // Getters
     public int getRoomNumber() {
-        return room;
+        return roomNumber;
     }
 
     public String getType() {
@@ -33,36 +29,14 @@ public class Room {
         return available;
     }
 
-
-
-    // 2. Book a room
-    public void bookRoom() {
-        if (available) {
-            available = false; // mark as  booked
-            System.out.println("Room " + room + " booked successfully!");
-        } else {
-            System.out.println("Room " + room + " is already booked!");
-        }
+    // Setter for availability
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
-    // 3. Cancel booking
-    public void cancelBooking() {
-        if (!available) {
-            available = true; // mark as free
-            System.out.println("Booking for Room " + room + " cancelled.");
-        } else {
-            System.out.println("Room " + room + " was already free!");
-        }
-    }
-
-
-    // 4. Show room details
-    public void displayRoomInfo() {
-        System.out.println(
-                " Room No: " + room +
-                " | Type: " + type +
-                " | Price: " + price +
-                " | Available: " + available);
+    @Override
+    public String toString() {
+        return "Room " + roomNumber + " [" + type + "] - ₹" + price +
+                (available ? " (Available)" : " (Booked)");
     }
 }
-

@@ -1,51 +1,85 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Hotel {
-    private ArrayList<Room> rooms;           // list of all rooms
-    private ArrayList<Reservation> reservations;  // list of all reservations
+    private String name;
+    private List<Room> rooms;
+    private List<Reservation> reservations;
 
-    public Hotel() {
-        rooms = new ArrayList<>();
-        reservations = new ArrayList<>();
+    // Constructor
+    public Hotel(String name) {
+        this.name = name;
+        this.rooms = new ArrayList<>();
+        this.reservations = new ArrayList<>();
     }
 
-    // Add a new room to the hotel
-    public void addRoom(Room room) {
-        rooms.add(room);
+    // Get hotel name
+    public String getName() {
+        return name;
     }
 
-    // Show all rooms that are available
-    public void showAvailableRooms() {
-        for (Room r : rooms) {
-            if (r.isAvailable()) {
-                System.out.println("Room " + r.getRoomNumber() +
-                        " (" + r.getType() + ") - Rs." + r.getPrice());
+    // Add a new room
+    public void addRoom(int roomNumber, String type, double price) {
+        rooms.add(new Room(roomNumber, type, price));
+        System.out.println("Room added successfully!");
+    }
+
+    // View all available rooms
+    public void viewAvailableRooms() {
+        boolean found = false;
+        for (Room room : rooms) {
+            if (room.isAvailable()) {
+                System.out.println(room);
+                found = true;
             }
+        }
+        if (!found) {
+            System.out.println("No available rooms in " + name);
         }
     }
 
     // Make a reservation
-    public void makeReservation(String customerName, int roomNo, String date) {
-        for (Room r : rooms) {
-            if (r.getRoomNumber() == roomNo && r.isAvailable()) {
-                r.bookRoom();   // mark the room as booked
-                Reservation res = new Reservation(customerName, roomNo, date);
-                reservations.add(res); // store the reservation
-                System.out.println("Reservation created successfully!");
+    public void makeReservation(String customerName, int roomNumber, String date) {
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == roomNumber && room.isAvailable()) {
+                room.setAvailable(false); // mark booked
+                Reservation res = new Reservation(customerName, roomNumber, date);
+                reservations.add(res);
+                System.out.println("Reservation successful for " + customerName);
                 return;
             }
         }
-        System.out.println("Room " + roomNo + " is not available!");
+        System.out.println("Room not available for booking!");
     }
 
-    // Show all reservations
+    // View all reservations
     public void showReservations() {
         if (reservations.isEmpty()) {
-            System.out.println("No reservations yet!");
+            System.out.println("No reservations yet in " + name);
         } else {
             for (Reservation res : reservations) {
-                System.out.println(res); // calls toString() in Reservation
+                System.out.println(res);
             }
         }
+    }
+
+    // Cancel a reservation
+    public void cancelReservation(String customerName, int roomNumber) {
+        for (Reservation res : reservations) {
+            if (res.getCustomerName().equalsIgnoreCase(customerName)
+                    && res.getRoomNumber() == roomNumber) {
+                reservations.remove(res);
+                // mark room available again
+                for (Room room : rooms) {
+                    if (room.getRoomNumber() == roomNumber) {
+                        room.setAvailable(true);
+                        break;
+                    }
+                }
+                System.out.println("Reservation cancelled successfully!");
+                return;
+            }
+        }
+        System.out.println("Reservation not found!");
     }
 }
