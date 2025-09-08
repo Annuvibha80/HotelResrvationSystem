@@ -51,7 +51,7 @@ public class Main {
                 System.out.println("6. Back to Hotel Selection");
 
                 int choice = sc.nextInt();
-                sc.nextLine(); // consume newline
+                sc.nextLine(); 
 
                 switch (choice) {
                     case 1:
@@ -95,7 +95,7 @@ public class Main {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         sdf.setLenient(false);
 
-                        //handle date input exception 🥱
+                        //handle date input exception 
                         try {
                             sdf.parse(date); // will throw ParseException if invalid
                             // If valid  make reservation
