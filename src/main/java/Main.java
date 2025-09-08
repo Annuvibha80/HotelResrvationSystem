@@ -62,7 +62,7 @@ public class Main {
                         try {
                             System.out.print("Enter Room Number: ");
                             roomNo = sc.nextInt();
-                            sc.nextLine(); // clear buffer
+                            sc.nextLine(); // clear buffer : some error was coming while printing nexrt code so added this
 
                             System.out.print("Enter Room Type: ");
                             type = sc.nextLine();
@@ -72,7 +72,7 @@ public class Main {
                             sc.nextLine(); // clear buffer
                         } catch (Exception e) {
                             System.out.println("Invalid input! Room number and price must be numbers.");
-                            sc.nextLine(); // clear invalid input
+                            sc.nextLine();
                             break; // go back to menu
                         }
 
